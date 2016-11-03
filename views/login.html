@@ -1,0 +1,21 @@
+<section class="login">
+	
+	<p class="text-intro">
+	<p>LOGIN</p>
+	<p class="message" ng-show="message">{{ message }}</p>
+	</p>
+
+	<form name="register" ng-submit="login()" novalidate>
+		<fieldset>
+			<input type="email" name="email" placeholder="Enter your e-mail" ng-model="user.email" ng-required="true">
+			<p ng-show="register.email.$invalid && register.email.$touched">Insert a valid e-mail</p>
+			<input type="password" name="password" placeholder="Enter your password" ng-model="user.password" ng-required="true">
+			<p ng-show="register.password.$invalid && register.password.$touched">Insert a valid password</p>
+		</fieldset>
+		<button type="submit" class="btn" ng-disabled="register.$invalid">Login</button>
+		<p ng-hide="user.first"><a ng-href="#/register">register</a> |
+		<a ng-href="#/reset">lost password</a></p>
+		<p ng-show="user.first"><a href="#" ng-click="signout()">sign out</a></p>
+	</form>
+
+</section>
