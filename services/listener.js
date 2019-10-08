@@ -13,12 +13,12 @@ return {
                   var timestamp = snapshot.val().date;
     			  console.log(userfirst + " " + userlast);
     			         $rootScope.$apply(function () {
-    		  		                      $rootScope.user = {
-                                            date: new Date(timestamp).getDate() + "/" + (new Date(timestamp).getMonth()+1) + "/" + new Date(timestamp).getFullYear(), 
-                                            first: userfirst,
-                                            last: userlast,
-                                            email: useremail 
-                                          };
+                            $rootScope.user = {
+                            date: new Date(timestamp).getDate() + "/" + (new Date(timestamp).getMonth()+1) + "/" + new Date(timestamp).getFullYear(), 
+                            first: userfirst,
+                            last: userlast,
+                            email: useremail 
+                            };
     		  	         });
     			  // ...
     			});

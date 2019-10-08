@@ -1,5 +1,7 @@
-firebaseapp.controller('LoginController', ['$scope', 'Authentication', function($scope, Authentication) {
+firebaseapp.controller('LoginController', ['$rootScope', '$scope', 'Authentication', 'AuthenticationListener', function($rootScope, $scope, Authentication, AuthenticationListener) {
 
+	  AuthenticationListener.getUser($rootScope.user);
+	
 	  $scope.login = function() {
 	  	Authentication.login($scope.user);
 	  }; // login function

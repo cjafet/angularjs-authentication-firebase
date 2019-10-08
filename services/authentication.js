@@ -9,35 +9,33 @@ firebaseapp.factory('Authentication',
 
 	return {
 		login: function(user) {
-			firebase.auth().signInWithEmailAndPassword(user.email, user.password)
-		  	.then(function(firebaseUser){
-
-		  	// firebase.database().ref('/users/' + firebaseUser.uid).once('value').then(function(snapshot) {
-    	// 		  var verified = snapshot.val().verified;
-    			  if (firebaseUser.emailVerified) {
-    			  	$location.path('/success');
-    			  	$rootScope.$apply(function () {
-				  		$rootScope.message = "Welcome back, " + user.email + "!";
-				  	});
-				  	AuthenticationListener.getUser(firebaseUser);
-    			  } else {
-    			  	$location.path('/login');
-    			  	$rootScope.$apply(function () {
-				  		$rootScope.message = "Your Email address have not been verified yet.";
-				  	});
-    			  }
-    		// });
-
-		  	// Get user information from the firebase db using the AuthenticationListener service
-		  	
-		  	//console.log(firebaseUser.email);	
-			//return firebaseUser;	
-		  	}).catch(function(error) {
-			  $rootScope.$apply(function () {
-			  	$rootScope.message = error.message;
+			firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION).then(function() {
+    			return firebase.auth().signInWithEmailAndPassword(user.email, user.password).then(function(firebaseUser) {
+					if (firebaseUser.emailVerified) {
+						$location.path('/success');
+						$rootScope.$apply(function () {
+						  $rootScope.message = "Welcome back, " + user.email + "!";
+						  $rootScope.user = firebaseUser;
+						  console.log(firebaseUser);
+						});
+						AuthenticationListener.getUser(firebaseUser);
+					} else {
+						$location.path('/login');
+						$rootScope.$apply(function () {
+							$rootScope.message = "Your Email address have not been verified yet.";
+						});
+					}
+				}).catch(function(error) {
+				$rootScope.$apply(function () {
+					$rootScope.message = error.message;
+				});
 			  });
-			  // ...
-			}); // signIn method
+					
+  			}).catch(function(error) {
+			var errorCode = error.code;
+			var errorMessage = error.message;
+ 			});
+
 		}, // login method
 
 		reset: function(email) {
